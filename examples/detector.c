@@ -2,6 +2,13 @@
 
 static int coco_ids[] = {1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,31,32,33,34,35,36,37,38,39,40,41,42,43,44,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,67,70,72,73,74,75,76,77,78,79,80,81,82,84,85,86,87,88,89,90};
 
+char *GetFilename(char *p)
+{ 
+    static char name[20]={""};
+    char *q = strrchr(p,'/') + 1;
+    strncpy(name,q,6);//注意后面的6，如果你的测试集的图片的名字字符（不包括后缀）是其他长度，请改为你需要的长度（官方的默认的长度是6）
+    return name;
+}
 
 void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, int ngpus, int clear)
 {
@@ -617,6 +624,56 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         free_image(im);
         free_image(sized);
         if (filename) break;
+    }
+    else {
+        printf("Enter image Path: ");
+        fflush(stdout);
+        input = fgets(input, 256, stdin);
+        if(!input) return;
+        strtok(input, "\n");
+
+        list *plist = get_paths(input);
+        char **paths = (char **)list_to_array(plist);
+        printf("Start Testing!\n");
+        int m = plist->size;
+        if(access("/home/rgj/darknet/data/out",0)==-1) {
+            if(mkdir("/home/rgj/darknet/data/out",0777)) {
+                printf("creat file bag failed!!!");
+            }
+        }
+        for(i = 0; i < m; ++i) {
+            char *path = paths[i];
+            image im = load_image_color(path, 0, 0);
+            image sized = letterbox_image(im, net->w, net->h);
+            layer l = net->layers[net->n-1];
+
+
+            float *X = sized.data;
+            time=what_time_is_it_now();
+            network_predict(net, X);
+            printf("Try Very Hard:");
+            printf("%s: Predicted in %f seconds.\n", path, what_time_is_it_now()-time);
+            int nboxes = 0;
+            detection *dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes);
+            //printf("%d\n", nboxes);
+            //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
+            if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
+            draw_detections(im, dets, nboxes, thresh, names, alphabet, l.classes);
+            free_detections(dets, nboxes);
+            if(outfile){
+                save_image(im, outfile);
+            }
+            else{
+                char b[2048];
+                sprintf(b, "/home/FENGsl/darknet/data/out/%s", GetFilename(path));
+                save_image(im, b);
+                printf("save %s successfully!\n", GetFilename(path));
+            }
+
+            free_image(im);
+            free_image(sized);
+            if (filename) break;
+        }
     }
 }
 
