@@ -659,7 +659,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
                 }
                 else{
                     char b[2048];
-                    sprintf(b, "/home/FENGsl/darknet/data/out/%s", GetFilename(path));
+                    sprintf(b, "/home/rgj/darknet/data/out/%s", GetFilename(path));
                     save_image(im, b);
                     printf("save %s successfully!\n", GetFilename(path));
                 }
