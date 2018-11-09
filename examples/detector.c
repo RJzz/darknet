@@ -583,76 +583,19 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
     while(1){
         if(filename){
             strncpy(input, filename, 256);
-        } else {
-            printf("Enter Image Path: ");
-            fflush(stdout);
-            input = fgets(input, 256, stdin);
-            if(!input) return;
-            strtok(input, "\n");
-        }
-        image im = load_image_color(input,0,0);
-        image sized = letterbox_image(im, net->w, net->h);
-        //image sized = resize_image(im, net->w, net->h);
-        //image sized2 = resize_max(im, net->w);
-        //image sized = crop_image(sized2, -((net->w - sized2.w)/2), -((net->h - sized2.h)/2), net->w, net->h);
-        //resize_network(net, sized.w, sized.h);
-        layer l = net->layers[net->n-1];
-
-
-        float *X = sized.data;
-        time=what_time_is_it_now();
-        network_predict(net, X);
-        printf("%s: Predicted in %f seconds.\n", input, what_time_is_it_now()-time);
-        int nboxes = 0;
-        detection *dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes);
-        //printf("%d\n", nboxes);
-        //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
-        if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
-        draw_detections(im, dets, nboxes, thresh, names, alphabet, l.classes);
-        free_detections(dets, nboxes);
-        if(outfile){
-            save_image(im, outfile);
-        }
-        else{
-            save_image(im, "predictions");
-#ifdef OPENCV
-            make_window("predictions", 512, 512, 0);
-            show_image(im, "predictions", 0);
-#endif
-        }
-
-        free_image(im);
-        free_image(sized);
-        if (filename) break;
-    }
-    else {
-        printf("Enter image Path: ");
-        fflush(stdout);
-        input = fgets(input, 256, stdin);
-        if(!input) return;
-        strtok(input, "\n");
-
-        list *plist = get_paths(input);
-        char **paths = (char **)list_to_array(plist);
-        printf("Start Testing!\n");
-        int m = plist->size;
-        if(access("/home/rgj/darknet/data/out",0)==-1) {
-            if(mkdir("/home/rgj/darknet/data/out",0777)) {
-                printf("creat file bag failed!!!");
-            }
-        }
-        for(i = 0; i < m; ++i) {
-            char *path = paths[i];
-            image im = load_image_color(path, 0, 0);
+            image im = load_image_color(input,0,0);
             image sized = letterbox_image(im, net->w, net->h);
+            //image sized = resize_image(im, net->w, net->h);
+            //image sized2 = resize_max(im, net->w);
+            //image sized = crop_image(sized2, -((net->w - sized2.w)/2), -((net->h - sized2.h)/2), net->w, net->h);
+            //resize_network(net, sized.w, sized.h);
             layer l = net->layers[net->n-1];
 
 
             float *X = sized.data;
             time=what_time_is_it_now();
             network_predict(net, X);
-            printf("Try Very Hard:");
-            printf("%s: Predicted in %f seconds.\n", path, what_time_is_it_now()-time);
+            printf("%s: Predicted in %f seconds.\n", input, what_time_is_it_now()-time);
             int nboxes = 0;
             detection *dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes);
             //printf("%d\n", nboxes);
@@ -664,15 +607,66 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
                 save_image(im, outfile);
             }
             else{
-                char b[2048];
-                sprintf(b, "/home/FENGsl/darknet/data/out/%s", GetFilename(path));
-                save_image(im, b);
-                printf("save %s successfully!\n", GetFilename(path));
+                save_image(im, "predictions");
+    #ifdef OPENCV
+                make_window("predictions", 512, 512, 0);
+                show_image(im, "predictions", 0);
+    #endif
             }
 
             free_image(im);
             free_image(sized);
             if (filename) break;
+        }
+        else {
+            printf("Enter image Path: ");
+            fflush(stdout);
+            input = fgets(input, 256, stdin);
+            if(!input) return;
+            strtok(input, "\n");
+
+            list *plist = get_paths(input);
+            char **paths = (char **)list_to_array(plist);
+            printf("Start Testing!\n");
+            int m = plist->size;
+            if(access("/home/rgj/darknet/data/out",0)==-1) {
+                if(mkdir("/home/rgj/darknet/data/out",0777)) {
+                    printf("creat file bag failed!!!");
+                }
+            }
+            for(i = 0; i < m; ++i) {
+                char *path = paths[i];
+                image im = load_image_color(path, 0, 0);
+                image sized = letterbox_image(im, net->w, net->h);
+                layer l = net->layers[net->n-1];
+
+
+                float *X = sized.data;
+                time=what_time_is_it_now();
+                network_predict(net, X);
+                printf("Try Very Hard:");
+                printf("%s: Predicted in %f seconds.\n", path, what_time_is_it_now()-time);
+                int nboxes = 0;
+                detection *dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes);
+                //printf("%d\n", nboxes);
+                //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
+                if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
+                draw_detections(im, dets, nboxes, thresh, names, alphabet, l.classes);
+                free_detections(dets, nboxes);
+                if(outfile){
+                    save_image(im, outfile);
+                }
+                else{
+                    char b[2048];
+                    sprintf(b, "/home/FENGsl/darknet/data/out/%s", GetFilename(path));
+                    save_image(im, b);
+                    printf("save %s successfully!\n", GetFilename(path));
+                }
+
+                free_image(im);
+                free_image(sized);
+                if (filename) break;
+            }
         }
     }
 }
