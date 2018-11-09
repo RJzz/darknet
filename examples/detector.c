@@ -6,7 +6,7 @@ char *GetFilename(char *p)
 { 
     static char name[20]={""};
     char *q = strrchr(p,'/') + 1;
-    strncpy(name,q,6);//注意后面的6，如果你的测试集的图片的名字字符（不包括后缀）是其他长度，请改为你需要的长度（官方的默认的长度是6）
+    strncpy(name,q,10);//注意后面的6，如果你的测试集的图片的名字字符（不包括后缀）是其他长度，请改为你需要的长度（官方的默认的长度是6）
     return name;
 }
 
