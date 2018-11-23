@@ -1,6 +1,6 @@
 classes= 1
-train  = /home/rjzz/darknet/scripts/Data_v1/ImageSets/Main/train.txt
-valid  = /home/rjzz/darknet/scripts/Data_v1/ImageSets/Main/test.txt
+train  = /home/rgj/darknet/scripts/Data_v1/ImageSets/Main/train.txt
+valid  = /home/rgj/darknet/scripts/Data_v1/ImageSets/Main/test.txt
 names = data/voc.names
 backup = backup
 
