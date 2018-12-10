@@ -1014,7 +1014,7 @@ void save_depthwise_convolutional_weights(layer l, FILE *fp)
             pull_depthwise_convolutional_layer(l);
         }
 #endif
-        int num = l.n * l.szie * l.size;
+        int num = l.n * l.size * l.size;
         fwrite(l.biases, sizeof(float), l.n, fp);
         if (l.batch_normalize) {
             fwrite(l.scales, sizeof(float), l.n, fp);
