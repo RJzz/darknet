@@ -366,7 +366,7 @@ void denormalize_depthwise_convolutional_layer(depthwise_convolutional_layer l) 
             l.weights[i * l.size * l.size + j] *= scale;
         }
         l.biases[i] -= l.rolling_mean[i] * scale;
-        l.saces[i] = 1;
+        l.scales[i] = 1;
         l.rolling_mean[i] = 0;
         l.rolling_variance[i] = 1;
     }
