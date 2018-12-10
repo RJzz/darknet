@@ -219,7 +219,7 @@ depthwise_convolutional_layer parse_depthwise_convolutional(list *options, size_
 
     char *activation_s = option_find_str(options, "activation", "logistic");
     ACTIVATION activation = get_activation(activation_s);
-
+    
     int batch, h, w, c;
     h = params.h;
     w = params.w;
