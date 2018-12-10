@@ -804,7 +804,7 @@ network *parse_network_cfg(char *filename)
         if(lt == CONVOLUTIONAL){
             l = parse_convolutional(options, params);
         }else if(it == DEPTHWISE_CONVOLUTIONAL) {
-            l = parse_depthwisw_convolutional(options, params);
+            l = parse_depthwise_convolutional(options, params);
         }
         else if(lt == DECONVOLUTIONAL){
             l = parse_deconvolutional(options, params);
@@ -1005,6 +1005,23 @@ void save_convolutional_weights(layer l, FILE *fp)
         fwrite(l.rolling_variance, sizeof(float), l.n, fp);
     }
     fwrite(l.weights, sizeof(float), num, fp);
+}
+
+void save_depthwise_convolutional_weights(layer l, FILE *fp)
+{
+#ifdef GPU
+        if (gpu_index >= 0) {
+            pull_depthwise_convolutional_layer(l);
+        }
+#endif
+        int num = l.n * l.szie * l.size;
+        fwrite(l.biases, sizeof(float), l.n, fp);
+        if (l.batch_normalize) {
+            fwrite(l.scales, sizeof(float), l.n, fp);
+            fwrite(l.scales, sizeof(float), l.n, fp);
+            fwrite(l.rolling_variance, sizeof(float), l.n, fp);
+        }
+        fwrite(l.weights, sizeof(float), num, fp);
 }
 
 void save_batchnorm_weights(layer l, FILE *fp)
