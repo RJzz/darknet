@@ -9,11 +9,11 @@
 
 
 
-int depthwise_convolitional_out_height(depthwise_convolutional_layer l) {
+int depthwise_convolutional_out_height(depthwise_convolutional_layer l) {
     return (l.h + 2*l.pad - l.size) / l.stride + 1;
 }
 
-int depthwise_convolitional_out_width(depthwise_convolitional_layer l) {
+int depthwise_convolutional_out_width(depthwise_convolutional_layer l) {
     return (l.w, + 2*l.pad -l.size) / l.stride + 1;
 }
 
@@ -104,8 +104,8 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
     for(i = 0; i < l.n * l.size * l.size; ++i) {
         l.weights[i] = scale * rand_normal();
     }
-    int out_w = depthwise_convolitional_out_width(l);
-    int out_h = depthwise_convolitional_out_height(l);
+    int out_w = depthwise_convolutional_out_width(l);
+    int out_h = depthwise_convolutional_out_height(l);
 
     l.out_h = out_h;
     l.out_w = out_w;
@@ -201,8 +201,8 @@ void resize_depthwise_convolutional_layer(depthwise_convolutional_layer *l, int 
     l->w = w;
     l->h = h;
 
-    int out_w = depthwise_convolitional_out_width(*l);
-    int out_h = depthwise_convolitional_out_height(*l);
+    int out_w = depthwise_convolutional_out_width(*l);
+    int out_h = depthwise_convolutional_out_height(*l);
 
     l->outputs = l->out_h * l->out_w * l->out_c;
     l->inputs = l->w * l->h * l->c;
@@ -265,7 +265,7 @@ void backward_bias_depthwise(float *bias_updates, float *delta, int batch, int n
     }
 }
 
-void forward_depthwise_convolutional(depthwise_convolitional_layer l, network, net) {
+void forward_depthwise_convolutional(depthwise_convolutional_layer l, network, net) {
     int out_h = l.out_h;
     int out_w = l.out_W;
     int i;
