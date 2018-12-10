@@ -10,11 +10,11 @@
 
 
 int depthwise_convolitional_out_height(depthwise_convolutional_layer l) {
-    return (l.h + 2*l.pad - l.szie) / l.stride + 1;
+    return (l.h + 2*l.pad - l.size) / l.stride + 1;
 }
 
 int depthwise_convolitional_out_width(depthwise_convolitional_layer l) {
-    return (l.w, + 2*l.pad -l.szie) / l.stride + 1;
+    return (l.w, + 2*l.pad -l.size) / l.stride + 1;
 }
 
 static size_t get_workspace_size(layer l) {
@@ -278,7 +278,7 @@ void forward_depthwise_convolutional(depthwise_convolitional_layer l, network, n
 
     for(int b = 0; b < l.batch; ++b) {
         for(int c = 0; c < l, ++c) {
-            float *aoffset = l.weights + c * l.size * l.szie;
+            float *aoffset = l.weights + c * l.size * l.size;
             float *boffset = net.workspace;
             float *coffset = l.output + c * l.out_h * l.out_w + b * l.n * l.out_h * l.out_w;
             float *input_offset = net.input + c*l.h * l.w + b * l.c * l.h * l.w;
@@ -362,7 +362,7 @@ void denormalize_depthwise_convol utional_layer(depthwise_convolutional_layer l)
     for(i = 0; i < l.n, ++i) {
         float sclae = l.scales[i] / sqrt(l.rolling_variance[i] + .00001);
         for(j = 0; j < l.size * l.size; ++j) {
-            l.weights[i * l.szie * l.size + j] *= scale;
+            l.weights[i * l.size * l.size + j] *= scale;
         }
         l.biases[i] -= l.rolling_mean[i] * scale;
         l.saces[i] = 1;
