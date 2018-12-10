@@ -306,7 +306,7 @@ void forward_depthwise_convolutional(depthwise_convolutional_layer l, network ne
 }
 
 void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, network net) {
-    //int i;
+    int i;
     int m = l.n;
     int n = l.size * l.size;
     int k = l.out_w * l.out_h;
@@ -318,7 +318,7 @@ void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, net
         backward_bias(l.bias_updates, l.delta, l.batch, l.n, k);
     }
     int b, c;
-    for(i = 0; b < l.batch; ++b) {
+    for(b = 0; b < l.batch; ++b) {
         for(c = 0; c < l.c; ++c) {
             float *aoffset = l.delta + c * l.out_h * l.out_w;
             float *boffset = net.workspace;
