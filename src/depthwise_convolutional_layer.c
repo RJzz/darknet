@@ -207,7 +207,7 @@ void resize_depthwise_convolutional_layer(depthwise_convolutional_layer *l, int 
     l->outputs = l->out_h * l->out_w * l->out_c;
     l->inputs = l->w * l->h * l->c;
 
-    l->output = realloc(l_>output, l->batch * l->outputs * sizeof(float));
+    l->output = realloc(l->output, l->batch * l->outputs * sizeof(float));
     l->delta = realloc(l->delta, l->batch * l->outputs * sizeof(float));
     if(l->batch_normalize) {
         l->x = realloc(l->x, l->batch * l->outputs * sizeof(float));
