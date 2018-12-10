@@ -170,7 +170,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
             l.variance_delta = cuda_make_array(l.variance, c);
 
             l.scales_gpu = cuda_make_array(l.scales, c);
-            l.scale_updates_gpu = cuda_mag_array(l.scale_updates, c);
+            l.scale_updates_gpu = cuda_make_array(l.scale_updates, c);
 
             l.x_gpu = cuda_make_array(l.output, l.batch * out_h * out_w * c);
             l.x_norm_gpu = cuda_make_array(l.output, l.batch *out_h * out_w * c);
