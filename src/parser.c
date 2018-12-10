@@ -1245,6 +1245,7 @@ void load_depthwise_convolutional_weights(layer l, FILE *fp)
     if (gpu_index >= 0) {
         push_depthwise_convolutional_layer(l);
     }
+#endif
 }
 
 void load_convolutional_weights(layer l, FILE *fp)
