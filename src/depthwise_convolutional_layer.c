@@ -55,12 +55,12 @@ static size_t get_workspace_size(layer l) {
 #ifdef GPU
 #ifdef CUDNN
 void cudnn_depthwise_convolutional_setup(layer *l) {
-    cudnnSetTensor4DDescriptor(l->dsrcTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->bacth, l->c, l->h, l->w);
-    cuddnSetTensor4DDescriptor(l->ddstTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->bacth, l->out_c, l->out_h, l->out_w);
+    cudnnSetTensor4DDescriptor(l->dsrcTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->batch, l->c, l->h, l->w);
+    cuddnSetTensor4DDescriptor(l->ddstTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->batch, l->out_c, l->out_h, l->out_w);
     cudnnSetTensor4DDescriptor(l->dweightDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l, l->c, l->size, l->size);
 
-    cudnnSetTensor4DDescriptor(l->srcTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->bacth, l->c, l->h, l->w);
-    cuddnSetTensor4DDescriptor(l->dstTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->bacth, l->out_c, l->out_h, l->out_w);
+    cudnnSetTensor4DDescriptor(l->srcTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->batch, l->c, l->h, l->w);
+    cuddnSetTensor4DDescriptor(l->dstTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->batch, l->out_c, l->out_h, l->out_w);
     cudnnSetTensor4DDescriptor(l->normTensorDesc, CUDNN_TENSOR_NCHW, CUDANN_DATA_FLOAT, )
     cudnnSetTensor4DDescriptor(l->weightDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l, l->c, l->size, l->size);
     #if CUDNN_MAJOR >= 6
