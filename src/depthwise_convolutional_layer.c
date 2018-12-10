@@ -117,7 +117,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
     l.output = calloc(l.batch * l.outputs, sizeof(float));
     l.delta = calloc(l.batch * l.outputs, sizeof(float));
 
-    l.forward = forward_deconvolutional_layer;
+    l.forward = forward_depthwise_convolutional_layer;
     l.backward = backward_depthwise_convolutional_layer;
     l.update = update_depthwise_convolutional_layer;
 
