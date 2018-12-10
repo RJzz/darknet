@@ -3,7 +3,7 @@
 
 #include "cuda.h"
 #include "image.h"
-#include "activation.h"
+#include "activations.h"
 #include "layer.h"
 #include "network.h"
 
