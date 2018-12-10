@@ -109,7 +109,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
 
     l.out_h = out_h;
     l.out_w = out_w;
-    l.out_c = l.n
+    l.out_c = l.n;
 
     l.outputs = l.out_h * l.out_w * l.out_c;
     l.input = l.w * l.h * l.c;
