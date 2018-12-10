@@ -90,7 +90,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
     l.batch_normalize = batch_normalize;
 
     l.weights = calloc(l.n * size * size, sizeof(float));
-    l.weights_updates = calloc(l.n * size * size, sizeof(float));
+    l.weight_updates = calloc(l.n * size * size, sizeof(float));
 
     l.biases = calloc(l.n, sizeof(float));
     l.bias_updates = calloc(l.n, sizeof(float));
