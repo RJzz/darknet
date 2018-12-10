@@ -61,7 +61,7 @@ void cudnn_depthwise_convolutional_setup(layer *l) {
 
     cudnnSetTensor4DDescriptor(l->srcTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->batch, l->c, l->h, l->w);
     cuddnSetTensor4DDescriptor(l->dstTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l->batch, l->out_c, l->out_h, l->out_w);
-    cudnnSetTensor4DDescriptor(l->normTensorDesc, CUDNN_TENSOR_NCHW, CUDANN_DATA_FLOAT, 1, l->out_c, 1, 1);
+    cudnnSetTensor4DDescriptor(l->normTensorDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, 1, l->out_c, 1, 1);
     cudnnSetTensor4DDescriptor(l->weightDesc, CUDNN_TENSOR_NCHW, CUDNN_DATA_FLOAT, l, l->c, l->size, l->size);
     #if CUDNN_MAJOR >= 6
     cudnnSetConvolutional2dDescriptor(l->convDesc, l->pad l->pad, l->stride, 1, 1, CUDNN_CROSS_CORRELATION, CUDNN_DATA_FLOAT);
