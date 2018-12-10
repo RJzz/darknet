@@ -83,11 +83,11 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
     l.n = c;
     l.c = c;
 
-    i.batch = batch;
-    i.stride = stride;
-    i.size = size;
-    i.pad = padding;
-    i.batch_normalize = batch_normalize;
+    l.batch = batch;
+    l.stride = stride;
+    l.size = size;
+    l.pad = padding;
+    l.batch_normalize = batch_normalize;
 
     l.weights = calloc(l.n * size * size, sizeof(float));
     l.weights_updates = calloc(l.n * size * size, sizeof(float));
@@ -96,7 +96,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
     l.bias_updates = calloc(l.n, sizeof(float));
 
     l.nweights = l.n * size * size;
-    l.nbiasese = l.n;
+    l.nbiases = l.n;
 
 
     float scale = sqrt(2./(size * size * c));
