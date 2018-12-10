@@ -308,8 +308,8 @@ void forward_depthwise_convolutional(depthwise_convolutional_layer l, network ne
 void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, network net) {
     int i;
     int m = l.n;
-    int  = l.size * l.size;
-    int l = l.out_w * l.out_h;
+    int n = l.size * l.size;
+    int k = l.out_w * l.out_h;
 
     gradient_array(l.output, m * k * l.batch, l.activation, l.delta);
     if(l.batch_normalize) {
