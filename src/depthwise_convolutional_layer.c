@@ -234,7 +234,7 @@ void resize_depthwise_convolutional_layer(depthwise_convolutional_layer *l, int 
     l->workspace_size = get_workspace_size(*l);
 }
 
-void add_bias_depthwise(float *output, float *biasese, int batch, int n, int size) {
+void add_bias_depthwise(float *output, float *biases, int batch, int n, int size) {
     int i, j, b;
     for(b = 0; b < batch; ++b) {
         for(i = 0; i < n; ++i) {
