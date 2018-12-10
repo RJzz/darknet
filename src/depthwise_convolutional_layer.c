@@ -188,7 +188,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
 #endif
     }
 #endif
-    l.workspace_size = get_workspace_size();
+    l.workspace_size = get_workspace_size(l);
     l.activation = activation;
 
     fprintf(stderr, "dw conv %5d %2d x%2d /%2d %4d x%4d x%4d -> %4d x%4d x%4d %5.3f BFLOPs\n", c, size, size, stride, w, h, c, l.out_w, l.out_h, l.out_c, (2.0 * l.n * l.size * l.size * l.out_h * l.out_w)/1000000000.);
