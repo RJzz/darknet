@@ -353,8 +353,8 @@ void update_depthwise_convolutional_layer(depthwise_convolutional_layer l, updat
         scal_cpu(l.n, momentum, l.bias_updates, 1);
     }
 
-    axpy_cpu(size, -decay * batch, l.weights, 1, l.weights_updates, 1);
-    axpy_cpu(size, learning_rate / bathc, l.weight_updates, 1, l.weights, 1);
+    axpy_cpu(size, -decay * batch, l.weights, 1, l.weight_updates, 1);
+    axpy_cpu(size, learning_rate / batch, l.weight_updates, 1, l.weights, 1);
     scal_cpu(size, momentum, l.weight_updates, 1);
 }
 
