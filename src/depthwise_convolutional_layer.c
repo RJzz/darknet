@@ -14,7 +14,7 @@ int depthwise_convolutional_out_height(depthwise_convolutional_layer l) {
 }
 
 int depthwise_convolutional_out_width(depthwise_convolutional_layer l) {
-    return (l.w, + 2*l.pad -l.size) / l.stride + 1;
+    return (l.w + 2*l.pad -l.size) / l.stride + 1;
 }
 
 static size_t get_workspace_size(layer l) {
