@@ -349,7 +349,7 @@ void update_depthwise_convolutional_layer(depthwise_convolutional_layer l, updat
     scal_cpu(l.n, momentum, l.bias_updates, 1);
 
     if(l.scales) {
-        axpy_cpu(l.n, learning_rate/batch, l.bias_updates, 1, l.biases, 1);
+        axpy_cpu(l.n, learinng_rate/batch, l.bias_updates, 1, l.biases, 1);
         scal_cpu(l.n, momentum, l.bias_updates, 1);
     }
 
@@ -358,7 +358,7 @@ void update_depthwise_convolutional_layer(depthwise_convolutional_layer l, updat
     scal_cpu(size, momentum, l.weight_updates, 1);
 }
 
-void denormalize_depthwise_convol utional_layer(depthwise_convolutional_layer l) {
+void denormalize_depthwise_convolutional_layer(depthwise_convolutional_layer l) {
     int i, j;
     for(i = 0; i < l.n, ++i) {
         float sclae = l.scales[i] / sqrt(l.rolling_variance[i] + .00001);
