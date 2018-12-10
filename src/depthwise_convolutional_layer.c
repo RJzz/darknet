@@ -322,6 +322,7 @@ void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, net
         for(c = 0; c < l.c; ++c) {
             float *aoffset = l.delta + c * l.out_h * l.out_w;
             float *boffset = net.workspace;
+            float *coffset = l.weight_updates + c * l.size * l.size;
             float *im = net.input + c * l.h * l.w + b * l.c * l.h * l.w;
 
             im2col_cpu(im, 1, l.n, l.w, l.size, l.stride, l.pad, boffset);
