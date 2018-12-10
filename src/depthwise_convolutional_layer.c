@@ -28,23 +28,23 @@ static size_t get_workspace_size(layer l) {
             l.convDesc,
             l.dstTensorDesc,
             l.fw_algo,
-            &s));
+            &s);
         if(s > most) most = s;
         cudnnGetConvolutionalBackwardFilterWorkFilterWorkspaceSize(cudnn_handle(),
-                l.srcTensorDesc,
-                l.weightDesc,
-                l.convDesc,
-                l.dstTensorDesc,
-                l.fw_algo,
-                &s);
+            l.srcTensorDesc,
+            l.weightDesc,
+            l.convDesc,
+            l.dstTensorDesc,
+            l.fw_algo,
+            &s);
         if(s > most) most = s;
         cudannGetConvolutionalBackwardDataWorkspaceSize(cudnn_handle(),
-                l.srcTensorDesc,
-                l.weightDesc,
-                l.convDesc,
-                l.dstTensorDesc,
-                l.fw_algo,
-                &s);
+            l.srcTensorDesc,
+            l.weightDesc,
+            l.convDesc,
+            l.dstTensorDesc,
+            l.fw_algo,
+            &s);
         if(s > most) most = s;
         return most;
     }
