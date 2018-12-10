@@ -160,10 +160,10 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
 
 
         if(batch_normalize) {
-            l.mean_gpu = cuda_make_array(l.maen, c);
+            l.mean_gpu = cuda_make_array(l.mean, c);
             l.variance_gpu = cuda_make_array(l.variance, c);
 
-            l.rolling_mean_gpu = cuda_make_array(l.maen, c);
+            l.rolling_mean_gpu = cuda_make_array(l.mean, c);
             l.rolling_variance_gpu = cuda_make_array(l.variance, c);
 
             l.mean_delta_g = cuda_make_array(l.mean, c);
