@@ -149,7 +149,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
     if(gpu_index >= 0) {
 
         l.weights_gpu = cuda_make_array(l.weights, c * size *size);
-        l.weight_updates_gpu = cuda_make_array(l.weights_updates, c * size * size);
+        l.weight_updates_gpu = cuda_make_array(l.weight_updates, c * size * size);
 
         l.biases_gpu = cuda_make_array(l.biases, c);
         l.bias_updates_gpu = cuda_make_array(l.bias_updates, c);
