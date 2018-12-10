@@ -271,7 +271,7 @@ void forward_depthwise_convolutional(depthwise_convolutional_layer l, network ne
     int i;
 
 
-    fill_cpu(l.outputs * l.batch, 0, l.output, l);
+    fill_cpu(l.outputs * l.batch, 0, l.output, 1);
 
     int k = l.size * l.size;
     int n = out_h * out_w;
