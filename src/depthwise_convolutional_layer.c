@@ -306,7 +306,7 @@ void forward_depthwise_convolutional(depthwise_convolutional_layer l, network ne
 }
 
 void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, network net) {
-    int i;
+    //int i;
     int m = l.n;
     int n = l.size * l.size;
     int k = l.out_w * l.out_h;
@@ -346,7 +346,7 @@ void update_depthwise_convolutional_layer(depthwise_convolutional_layer l, updat
 
     int size = l.size * l.size * l.c;
     axpy_cpu(l.n, learinng_rate/batch, l.bias_updates, 1, l.biases, 1);
-    scal_cpu(l.n, momentum, l.bias_updates, l);
+    scal_cpu(l.n, momentum, l.bias_updates, 1);
 
     if(l.scales) {
         axpy_cpu(l.n, learinng_rate/batch, l.bias_updates, 1, l.biases, 1);
