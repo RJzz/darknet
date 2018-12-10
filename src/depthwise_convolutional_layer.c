@@ -142,9 +142,9 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
         l.x_norm = calloc(l.batch * l.outputs, sizeof(float));
     }
 #ifdef GPU
-    l.forward_gpu = forward_deconvolutional_layer_gpu;
-    l.backward_gpu = backward_depthwise_convolutional_gpu;
-    l.update_gpu = update_depthwise_convolutional_gpu;
+    l.forward_gpu = forward_depthwise_convolutional_layer_gpu;
+    l.backward_gpu = backward_depthwise_convolutional_layer_gpu;
+    l.update_gpu = update_depthwise_convolutional_layer_gpu;
 
     if(gpu_index >= 0) {
 
