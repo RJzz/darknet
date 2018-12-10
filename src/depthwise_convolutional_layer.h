@@ -11,7 +11,7 @@ typedef layer depthwise_convolutional_layer;
 
 #ifdef GPU
 void forward_depthwise_convolutional_gpu(depthwise_convolutional_layer layer, network net);
-void backward_depthwise_convolutional_gpu(depthwise_convolutional_layer layer, network, net);
+void backward_depthwise_convolutional_gpu(depthwise_convolutional_layer layer, network net);
 void update_depthwise_convolutional_gpu(depthwise_convolutional_layer layer, update_args a); 
 
 void push_depthwise_convolutional_layer(depthwise_convolutional_layer layer);
