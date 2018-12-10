@@ -22,7 +22,7 @@ static size_t get_workspace_size(layer l) {
     if(gpu_index >= 0) {
         size_t most = 0;
         size_t s = 0;
-        cudnnGetConvolutionalForwardWorkspaceSize(cudnn_handle(,
+        cudnnGetConvolutionalForwardWorkspaceSize(cudnn_handle(),
             l.srcTensorDesc,
             l.weightDesc,
             l.convDesc,
@@ -36,7 +36,7 @@ static size_t get_workspace_size(layer l) {
                 l.convDesc,
                 l.dstTensorDesc,
                 l.fw_algo,
-                &s));
+                &s);
         if(s > most) most = s;
         cudannGetConvolutionalBackwardDataWorkspaceSize(cudnn_handle(),
                 l.srcTensorDesc,
@@ -44,7 +44,7 @@ static size_t get_workspace_size(layer l) {
                 l.convDesc,
                 l.dstTensorDesc,
                 l.fw_algo,
-                &s));
+                &s);
         if(s > most) most = s;
         return most;
     }
