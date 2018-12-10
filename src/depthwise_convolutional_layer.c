@@ -265,7 +265,7 @@ void backward_bias_depthwise(float *bias_updates, float *delta, int batch, int n
     }
 }
 
-void forward_depthwise_convolutional(depthwise_convolutional_layer l, network, net) {
+void forward_depthwise_convolutional(depthwise_convolutional_layer l, network net) {
     int out_h = l.out_h;
     int out_w = l.out_W;
     int i;
