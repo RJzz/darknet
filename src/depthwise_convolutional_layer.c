@@ -66,7 +66,7 @@ void cudnn_depthwise_convolutional_setup(layer *l) {
     #if CUDNN_MAJOR >= 6
     cudnnSetConvolutional2dDescriptor(l->convDesc, l->pad l->pad, l->stride, 1, 1, CUDNN_CROSS_CORRELATION, CUDNN_DATA_FLOAT);
     #else
-    cudnnSetConvolutional2dDescriptor(l->convDesc, l->ad, l->pad, l->stride, l->stride, 1, 1, CUDNN_CROSS_CORRELATION);
+    cudnnSetConvolutional2dDescriptor(l->convDesc, l->pad, l->pad, l->stride, l->stride, 1, 1, CUDNN_CROSS_CORRELATION);
     #endif
 }
 #endif
