@@ -31,6 +31,7 @@
 #include "shortcut_layer.h"
 #include "parser.h"
 #include "data.h"
+#include "depthwise_convolutional_layer.h"
 
 load_args get_base_args(network *net)
 {

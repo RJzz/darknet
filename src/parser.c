@@ -36,6 +36,8 @@
 #include "softmax_layer.h"
 #include "lstm_layer.h"
 #include "utils.h"
+#include "depthwise_convolutional_layer.h"
+
 
 typedef struct{
     char *type;
@@ -83,6 +85,7 @@ LAYER_TYPE string_to_layer_type(char * type)
             || strcmp(type, "[softmax]")==0) return SOFTMAX;
     if (strcmp(type, "[route]")==0) return ROUTE;
     if (strcmp(type, "[upsample]")==0) return UPSAMPLE;
+    if(strcmp(type, "[depthwise_convolutional]")==0) return DEPTHWISE_CONVOLUTIONAL;
     return BLANK;
 }
 
@@ -203,6 +206,31 @@ convolutional_layer parse_convolutional(list *options, size_params params)
     layer.flipped = option_find_int_quiet(options, "flipped", 0);
     layer.dot = option_find_float_quiet(options, "dot", 0);
 
+    return layer;
+}
+
+depthwise_convolutional_layer parse_depthwise_convolutional(list *options, size_params params)
+{
+    int size = option_find_int(options, "size", 1);
+    int stride = option_find_int(options, "stride", 1);
+    int pad = option_find_int_quiet(options, "pad", 0);
+    int padding = option_find_quiet(options, "padding", 0);
+    if (pad) padding = size / 2;
+
+    char *activation_s = option_find_str(options, "activation", "logistic");
+    ACTIVATION activation = get_activation(activation_s);
+
+    int batch, h, w, c;
+    h = params.h;
+    w = params.w;
+    c = params.c;
+    batch = params.batch;
+    if(!(h && w && c)) error("Layer before convolutional layer must output image");
+    int batch_normalize = option_find_int_quiet(options, "batch_normalize", 0);
+
+    depthwise_convolutional_layer layer = make_depthwise_convolutional_layer(batch, h, w, c, size, stride, padding, activation, batch_normalize);
+    layer.fipped = option_find_int_quiet(options, "flipped", 0);
+    layer.dot = option_find_float_quiet(options, "dot", 0);
     return layer;
 }
 
@@ -775,7 +803,10 @@ network *parse_network_cfg(char *filename)
         LAYER_TYPE lt = string_to_layer_type(s->type);
         if(lt == CONVOLUTIONAL){
             l = parse_convolutional(options, params);
-        }else if(lt == DECONVOLUTIONAL){
+        }else if(it == DEPTHWISE_CONVOLUTIONAL) {
+            l = parse_depthwisw_convolutional(options, params);
+        }
+        else if(lt == DECONVOLUTIONAL){
             l = parse_deconvolutional(options, params);
         }else if(lt == LOCAL){
             l = parse_local(options, params);
@@ -1027,6 +1058,9 @@ void save_weights_upto(network *net, char *filename, int cutoff)
     for(i = 0; i < net->n && i < cutoff; ++i){
         layer l = net->layers[i];
         if (l.dontsave) continue;
+        if(l.type == DEPTHWISE_CONVOLUTIONAL) {
+            save_depthwise_convolutional_weights(l, fp);
+        }
         if(l.type == CONVOLUTIONAL || l.type == DECONVOLUTIONAL){
             save_convolutional_weights(l, fp);
         } if(l.type == CONNECTED){
@@ -1161,6 +1195,42 @@ void load_convolutional_weights_binary(layer l, FILE *fp)
 #endif
 }
 
+void load_depthwise_convolutional_weights(layer l, FILE *fp)
+{
+    int num = l.n * l.size * l.size;
+    fread(l.biases, sizeof(float), l.n, fp);
+    if (l.batch_normalize && (!l.dontloadscales)) {
+        fread(l.scales, sizeof(float), l.n, fp);
+        fread(l.rolling_mean, sizeof(float), l.n, fp);
+        fread(l.rolling_variance, sizeof(float), l.n, fp);
+        if (0) {
+            int i;
+            for (i = 0; i < l.nl; ++i) {
+                printf("%g, ", l.rolling_mean[i]);
+            }
+            printf("\n");
+            for(i = 0; i < l.nl; ++i) {
+                printf("%g, ", l.rolling_variance[i]);
+            }
+            printf("\n");
+        }
+        if (0) {
+            fill_cpu(l.n, 0, l.rolling_mean, 1);
+            fill_cpu(l.n, 0, l.rolling_variance, 1);
+        }
+        fread(l.weights, sizeof(float), num, fp);
+
+        if (l.flipped) {
+            //transpos_matrix(l.weights, l.c * l.size, * l.szie, l.n);
+
+        }
+#ifdef GPU
+        if (gpu_index >= 0) {
+            push_depthwise_convolutional_layer(l);
+        }
+    }
+}
+
 void load_convolutional_weights(layer l, FILE *fp)
 {
     if(l.binary){
@@ -1246,6 +1316,9 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
     for(i = start; i < net->n && i < cutoff; ++i){
         layer l = net->layers[i];
         if (l.dontload) continue;
+        if (l.type == DEPTHWISE_CONVOLUTIONAL) {
+            load_depthwise_convolutional_weights(l, lp);
+        }
         if(l.type == CONVOLUTIONAL || l.type == DECONVOLUTIONAL){
             load_convolutional_weights(l, fp);
         }

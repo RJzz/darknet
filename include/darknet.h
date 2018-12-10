@@ -87,7 +87,8 @@ typedef enum {
     UPSAMPLE,
     LOGXENT,
     L2NORM,
-    BLANK
+    BLANK,
+    DEPTHWISE_CONVOLUTIONAL
 } LAYER_TYPE;
 
 typedef enum{
