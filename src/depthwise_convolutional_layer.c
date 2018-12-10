@@ -275,9 +275,9 @@ void forward_depthwise_convolutional(depthwise_convolutional_layer l, network ne
 
     int k = l.size * l.size;
     int n = out_h * out_w;
-
-    for(int b = 0; b < l.batch; ++b) {
-        for(int c = 0; c < l, ++c) {
+    int b, c;
+    for(b = 0; b < l.batch; ++b) {
+        for(c = 0; c < l, ++c) {
             float *aoffset = l.weights + c * l.size * l.size;
             float *boffset = net.workspace;
             float *coffset = l.output + c * l.out_h * l.out_w + b * l.n * l.out_h * l.out_w;
