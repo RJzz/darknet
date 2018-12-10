@@ -218,7 +218,7 @@ void resize_depthwise_convolutional_layer(depthwise_convolutional_layer *l, int 
     cuda_free(l->output_gpu);
 
     l->x_gpu = cuda_make_array(l->delta, l->batch * l->outputs);
-    l->output_gpu = cuda_make_array = (l->output, l->batch * l->outputs);
+    l->output_gpu = cuda_make_array(l->output, l->batch * l->outputs);
 
     if(l->batch_normalize) {
         cuda_free(l->x_gpu);
