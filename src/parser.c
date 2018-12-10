@@ -214,7 +214,7 @@ depthwise_convolutional_layer parse_depthwise_convolutional(list *options, size_
     int size = option_find_int(options, "size", 1);
     int stride = option_find_int(options, "stride", 1);
     int pad = option_find_int_quiet(options, "pad", 0);
-    int padding = option_find_quiet(options, "padding", 0);
+    int padding = option_find_int_quiet(options, "padding", 0);
     if (pad) padding = size / 2;
 
     char *activation_s = option_find_str(options, "activation", "logistic");
