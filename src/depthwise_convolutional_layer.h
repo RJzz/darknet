@@ -1,10 +1,10 @@
-#ifdef DEPTHWISE_CONVOLUTIONAL_LAYER_H
+#ifndef DEPTHWISE_CONVOLUTIONAL_LAYER_H
 #define DEPTHWISE_CONVOLUTIONAL_LAYER_H
 
 #include "cuda.h"
 #include "image.h"
 #include "activation.h"
-#include "later.h"
+#include "layer.h"
 #include "network.h"
 
 typedef layer depthwise_convolutional_layer;
