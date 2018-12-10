@@ -204,6 +204,9 @@ void resize_depthwise_convolutional_layer(depthwise_convolutional_layer *l, int 
     int out_w = depthwise_convolutional_out_width(*l);
     int out_h = depthwise_convolutional_out_height(*l);
 
+    l->out_h = out_h;
+    l->out_w = out_w;
+
     l->outputs = l->out_h * l->out_w * l->out_c;
     l->inputs = l->w * l->h * l->c;
 
@@ -277,7 +280,7 @@ void forward_depthwise_convolutional(depthwise_convolutional_layer l, network ne
     int n = out_h * out_w;
     int b, c;
     for(b = 0; b < l.batch; ++b) {
-        for(c = 0; c < l, ++c) {
+        for(c = 0; c < l.batch, ++c) {
             float *aoffset = l.weights + c * l.size * l.size;
             float *boffset = net.workspace;
             float *coffset = l.output + c * l.out_h * l.out_w + b * l.n * l.out_h * l.out_w;
