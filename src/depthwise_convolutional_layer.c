@@ -339,17 +339,17 @@ void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, net
 
 
 void update_depthwise_convolutional_layer(depthwise_convolutional_layer l, update_args a) {
-    float learing_rate = a.learing_rate * l.learning_rate_scale;
+    float learinng_rate = a.learning_rate * l.learning_rate_scale;
     float momentum = a.momentum;
     float decay = a.decay;
     int batch = a.bathc;
 
     int size = l.size * l.size * l.c;
-    axpy_cpu(l.n, learing_rate/batch, l.bias_updates, 1, l.biases, 1);
+    axpy_cpu(l.n, learinng_rate/batch, l.bias_updates, 1, l.biases, 1);
     scal_cpu(l.n, momentum, l.bias_updates, l);
 
     if(l.scales) {
-        axpy_cpu(l.n, learing_rate/batch, l.bias_updates, 1, l.biases, 1);
+        axpy_cpu(l.n, learinng_rate/batch, l.bias_updates, 1, l.biases, 1);
         scal_cpu(l.n, momentum, l.bias_updates, 1);
     }
 
