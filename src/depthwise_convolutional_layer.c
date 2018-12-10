@@ -21,7 +21,7 @@ static size_t get_workspace_size(layer l) {
 #ifdef CUDNN
     if(gpu_index >= 0) {
         size_t most = 0;
-        size_t s = 0l
+        size_t s = 0;
         cudnnGetConvolutionalForwardWorkspaceSize(cudnn_handle(,
             l.srcTensorDesc,
             l.weightDesc,
@@ -96,7 +96,7 @@ depthwise_convolutional_layer make_depthwise_convolutional_layer(int  batch, int
     l.bias_updates = calloc(l.n, sizeof(float));
 
     l.nweights = l.n * size * size;
-    l.nbiasese = 1.n;
+    l.nbiasese = l.n;
 
 
     float scale = sqrt(2./(size * size * c));
