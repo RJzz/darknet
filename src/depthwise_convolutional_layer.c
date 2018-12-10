@@ -361,7 +361,7 @@ void update_depthwise_convolutional_layer(depthwise_convolutional_layer l, updat
 void denormalize_depthwise_convolutional_layer(depthwise_convolutional_layer l) {
     int i, j;
     for(i = 0; i < l.n; ++i) {
-        float sclae = l.scales[i] / sqrt(l.rolling_variance[i] + .00001);
+        float scale = l.scales[i] / sqrt(l.rolling_variance[i] + .00001);
         for(j = 0; j < l.size * l.size; ++j) {
             l.weights[i * l.size * l.size + j] *= scale;
         }
