@@ -325,7 +325,7 @@ void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, net
             float *coffset = l.weight_updates + c * l.size * l.size;
             float *im = net.input + c * l.h * l.w + b * l.c * l.h * l.w;
             im2col_cpu(im, 1, l.n, l.w, l.size, l.stride, l.pad, boffset);
-            gemm(0, 1, 1, n, k, 1, aoffset, k, boffset, k, 1, coffset, n)；
+            gemm(0, 1, 1, n, k, 1, aoffset, k, boffset, k, 1, coffset, n);
             if(net.delta) {
                 aoffset = l.weights + c * l.size * l.size;
                 boffset = l.delta + c * l.out_h * l.out_w + b * l.n * l.out_h * l.out_w;
