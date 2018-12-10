@@ -1222,29 +1222,28 @@ void load_depthwise_convolutional_weights(layer l, FILE *fp)
         fread(l.rolling_variance, sizeof(float), l.n, fp);
         if (0) {
             int i;
-            for (i = 0; i < l.nl; ++i) {
+            for (i = 0; i < l.n; ++i) {
                 printf("%g, ", l.rolling_mean[i]);
             }
             printf("\n");
-            for(i = 0; i < l.nl; ++i) {
+            for(i = 0; i < l.n; ++i) {
                 printf("%g, ", l.rolling_variance[i]);
             }
             printf("\n");
         }
-        if (0) {
-            fill_cpu(l.n, 0, l.rolling_mean, 1);
-            fill_cpu(l.n, 0, l.rolling_variance, 1);
-        }
-        fread(l.weights, sizeof(float), num, fp);
+    }
+    if (0) {
+        fill_cpu(l.n, 0, l.rolling_mean, 1);
+        fill_cpu(l.n, 0, l.rolling_variance, 1);
+    }
+    fread(l.weights, sizeof(float), num, fp);
 
-        if (l.flipped) {
-            //transpos_matrix(l.weights, l.c * l.size, * l.szie, l.n);
-
-        }
+    if (l.flipped) {
+        //transpos_matrix(l.weights, l.c * l.size, * l.szie, l.n);
+    }
 #ifdef GPU
-        if (gpu_index >= 0) {
-            push_depthwise_convolutional_layer(l);
-        }
+    if (gpu_index >= 0) {
+        push_depthwise_convolutional_layer(l);
     }
 }
 
