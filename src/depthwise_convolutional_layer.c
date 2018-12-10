@@ -314,9 +314,9 @@ void backward_depthwise_convolutional_layer(depthwise_convolutional_layer l, net
     }else {
         backward_bias(l.bias_updates, l.delta, l.batch, l.n, k);
     }
-
-    for(int i = 0; b < l.batch; ++b) {
-        for(int c = 0; c < l.c; ++c) {
+    int b, c;
+    for(i = 0; b < l.batch; ++b) {
+        for(c = 0; c < l.c; ++c) {
             float *aoffset = l.delta + c * l.out_h * l.out_w;
             float *boffset = net.workspace;
             float *im = net.input + c * l.h * l.w + b * l.c * l.h * l.w;
