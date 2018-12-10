@@ -1333,7 +1333,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         layer l = net->layers[i];
         if (l.dontload) continue;
         if (l.type == DEPTHWISE_CONVOLUTIONAL) {
-            load_depthwise_convolutional_weights(l, lp);
+            load_depthwise_convolutional_weights(l, fp);
         }
         if(l.type == CONVOLUTIONAL || l.type == DECONVOLUTIONAL){
             load_convolutional_weights(l, fp);
