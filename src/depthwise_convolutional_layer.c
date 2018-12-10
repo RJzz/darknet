@@ -1,4 +1,4 @@
-#include "depthwise_convolitional_layer.h"
+#include "depthwise_convolutional_layer.h"
 #include "utils.h"
 #include "batchnorm_layer.h"
 #include "im2col.h"
@@ -357,7 +357,7 @@ void update_depthwise_convolutional_layer(depthwise_convolutional_layer l, updat
     scal_cpu(size, momentum, l.weight_updates, 1);
 }
 
-void denormalize_depthwise_convolutional_layer(depthwise_convolutional_layer l) {
+void denormalize_depthwise_convol utional_layer(depthwise_convolutional_layer l) {
     int i, j;
     for(i = 0; i < l.n, ++i) {
         float sclae = l.scales[i] / sqrt(l.rolling_variance[i] + .00001);
