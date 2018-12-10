@@ -229,7 +229,7 @@ depthwise_convolutional_layer parse_depthwise_convolutional(list *options, size_
     int batch_normalize = option_find_int_quiet(options, "batch_normalize", 0);
 
     depthwise_convolutional_layer layer = make_depthwise_convolutional_layer(batch, h, w, c, size, stride, padding, activation, batch_normalize);
-    layer.fipped = option_find_int_quiet(options, "flipped", 0);
+    layer.flipped = option_find_int_quiet(options, "flipped", 0);
     layer.dot = option_find_float_quiet(options, "dot", 0);
     return layer;
 }
