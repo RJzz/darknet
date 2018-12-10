@@ -286,7 +286,7 @@ void forward_depthwise_convolutional(depthwise_convolutional_layer l, network ne
             float *coffset = l.output + c * l.out_h * l.out_w + b * l.n * l.out_h * l.out_w;
             float *input_offset = net.input + c*l.h * l.w + b * l.c * l.h * l.w;
             im2col_cpu(input_offset, 1, l.h, l.w, l.size, l.stride, l.pad, boffset);
-            gemm(0, 0, 1, n, k, 1, aoffset, k, boffset, n, 1, cOffset, n);
+            gemm(0, 0, 1, n, k, 1, aoffset, k, boffset, n, 1, coffset, n);
 
             // for(int i = 0; i < l.size * l.size; ++i) {
 
