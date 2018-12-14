@@ -374,7 +374,10 @@ int resize_network(network *net, int w, int h)
         layer l = net->layers[i];
         if(l.type == CONVOLUTIONAL){
             resize_convolutional_layer(&l, w, h);
-        }else if(l.type == CROP){
+        }else if(l.type == DEPTHWISE_CONVOLUTIONAL){
+            resize_depthwise_convolutional_layer(&l, w, h);
+        }
+        else if(l.type == CROP){
             resize_crop_layer(&l, w, h);
         }else if(l.type == MAXPOOL){
             resize_maxpool_layer(&l, w, h);
